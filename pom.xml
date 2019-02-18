@@ -11,12 +11,13 @@
     <groupId>com.first.cloud</groupId>
     <artifactId>cloud-demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>cloud-demo</name>
-    <description>Demo project for Spring Boot</description>
+    <name>kube-seeder</name>
+    <description>Seeder project for google-cloud-Kubernetes</description>
 
     <properties>
         <java.version>1.8</java.version>
         <docker.image.prefix>names-app</docker.image.prefix>
+
     </properties>
 
     <dependencies>
@@ -69,6 +70,31 @@
                 <configuration>
                     <repository>${docker.image.prefix}/${project.artifactId}</repository>
                 </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>${project.artifactId}</artifactId>
+                                    <version>${project.version}</version>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>
